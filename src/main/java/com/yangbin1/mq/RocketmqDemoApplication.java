@@ -1,4 +1,4 @@
-package com.yangbin1.rocketmqdemo;
+package com.yangbin1.mq;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
