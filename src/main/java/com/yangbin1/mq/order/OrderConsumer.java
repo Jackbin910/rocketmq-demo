@@ -14,7 +14,7 @@ public class OrderConsumer {
     public static void main(String[] args) throws MQClientException {
 
         //1.创建DefaultMQPushConsumer
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("demo_consumer_group");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("demo_consumer_order_group");
 
         //2.nameSrvAddress
         consumer.setNamesrvAddr("47.101.10.100:9876");
