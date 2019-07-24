@@ -1,9 +1,7 @@
 package com.yangbin1.mq.order;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.client.consumer.listener.*;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
@@ -25,31 +23,33 @@ public class OrderConsumer {
         consumer.setConsumeMessageBatchMaxSize(2);
 
         //3.订阅主题
-        consumer.subscribe("Topic_Demo", "*");
+        consumer.subscribe("Topic_Order_Demo", "*");
 
         //4.消息监听
-        consumer.setMessageListener(new MessageListenerConcurrently() {
+        consumer.setMessageListener(new MessageListenerOrderly() {
             @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-                //迭代消息信息
-                for (MessageExt msg : list) {
-                    try {
-                        //获取主题
-                        String topic = msg.getTopic();
-                        //获取标签
-                        String tags = msg.getTags();
+            public ConsumeOrderlyStatus consumeMessage(List<MessageExt> list, ConsumeOrderlyContext consumeOrderlyContext) {
+                {
+                    //迭代消息信息
+                    for (MessageExt msg : list) {
+                        try {
+                            //获取主题
+                            String topic = msg.getTopic();
+                            //获取标签
+                            String tags = msg.getTags();
 
-                        //获取消息
-                        String result = new String(msg.getBody(), RemotingHelper.DEFAULT_CHARSET);
-                        System.out.println("Consumer消费信息---topic:" + topic + "," + "tags:" + tags + "result:" + result);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        //重试
-                        return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                            //获取消息
+                            String result = new String(msg.getBody(), RemotingHelper.DEFAULT_CHARSET);
+                            System.out.println("OrderConsumer消费信息---topic:" + topic + "," + "tags:" + tags + "result:" + result);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                            //重试
+                            return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
+                        }
                     }
+                    //消费成功
+                    return ConsumeOrderlyStatus.SUCCESS;
                 }
-                //消费成功
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });
 

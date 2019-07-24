@@ -33,7 +33,7 @@ public class OrderProducer {
         producer.start();
 
         //4.创建消息对象
-        Message message = new Message("Topic_Demo","Tags","Keys_1","hello".getBytes(RemotingHelper.DEFAULT_CHARSET));
+        Message message = new Message("Topic_Order_Demo","Tags","Keys_1","hello".getBytes(RemotingHelper.DEFAULT_CHARSET));
 
         //5.发送消息
         // 第一个参数发送的消息，
