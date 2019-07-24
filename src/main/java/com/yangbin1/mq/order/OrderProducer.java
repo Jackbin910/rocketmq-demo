@@ -32,14 +32,13 @@ public class OrderProducer {
         //3.开启producer
         producer.start();
 
-        //4.创建消息对象
-        Message message = new Message("Topic_Order_Demo","Tags","Keys_1","hello".getBytes(RemotingHelper.DEFAULT_CHARSET));
-
         //5.发送消息
         // 第一个参数发送的消息，
         // 第二个参数指定队列
         // 指定队列下标
         for (int i = 0; i < 5; i++) {
+            Message message = new Message("Topic_Order_Demo", "Tags", "Keys" + i, ("hello!" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
+
             SendResult result = producer.send(message, new MessageQueueSelector() {
                         @Override
                         public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
