@@ -54,7 +54,8 @@ public class TransactionListenerImpl implements TransactionListener {
         String transactionId = msg.getTransactionId();
         //获取事务状态
         Integer status = localTransaction.get(transactionId);
-        switch(status){
+        System.out.println("消息回查------transactionId:" + transactionId + "状态:" + status);
+        switch (status) {
             case 0:
                 return LocalTransactionState.UNKNOW;
             case 1:
