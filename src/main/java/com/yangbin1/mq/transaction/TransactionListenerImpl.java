@@ -25,7 +25,7 @@ public class TransactionListenerImpl implements TransactionListener {
     }
 
     /**
-     * 消息回传
+     * 消息回查
      * @param msg
      * @return
      */
